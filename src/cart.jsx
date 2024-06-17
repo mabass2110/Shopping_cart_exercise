@@ -154,7 +154,14 @@ const Products = (props) => {
     return newTotal;
   };
   // TODO: implement the restockProducts function
- 
+  const restockProducts = (url) => {
+    doFetch(url)
+    let newItems = data.map(item=>{
+      let {name,country,cost,inStock} = item;
+      return {name,country,cost,inStock}
+    })
+    setItems(...items, ...newItems)
+  };
 
   return (
     <Container>
