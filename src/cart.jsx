@@ -94,12 +94,23 @@ const Products = (props) => {
   console.log(`Rendering Products ${JSON.stringify(data)}`);
   // Fetch Data
   const addToCart = (e) => {
+    // Extract the name of the item from the event target
     let name = e.target.name;
+
+    // Filter the 'items' array to find the item with matching 'name'
     let item = items.filter((item) => item.name == name);
+
+    // Check if the item is in stock (assuming 'instock' is a property of the item)
+    if (item[0].instock === 0) return // If not in stock, exit function
+
+    // Decrease the 'instock' count of the item by 1
+    item[0].instock = item[0].instock - 1
+
     console.log(`add to Cart ${JSON.stringify(item)}`);
     setCart([...cart, ...item]);
     doFetch(query);
   };
+  
   const deleteCartItem = (index) => {
     let newCart = cart.filter((item, i) => index != i);
     setCart(newCart);
