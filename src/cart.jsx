@@ -110,9 +110,17 @@ const Products = (props) => {
     setCart([...cart, ...item]);
     doFetch(query);
   };
-  
-  const deleteCartItem = (index) => {
+
+  const deleteCartItem = (delIndex) => {
+    //setting up new cart
     let newCart = cart.filter((item, i) => index != i);
+    //finding the target item
+    let target = cart.filter((item,index)=> delIndex == i )
+
+    //Defining new items, and adding by one if the target name is the same as target
+    let newItems = items.map((item, index)=>{
+      if(item.name === target[0].name) item.instock += 1
+    })
     setCart(newCart);
   };
   const photos = ["apple.png", "orange.png", "beans.png", "cabbage.png"];
@@ -125,7 +133,7 @@ const Products = (props) => {
       <li key={index}>
         <Image src={`./src/assets/${photos[index % 4]}`} width={70} roundedCircle></Image>
         <Button variant="primary" size="large">
-          {item.name}:{item.cost}
+         { `${item.name}:${item.cost} Stock:${item.instock}`} 
         </Button>
         <input name={item.name} type="submit" onClick={addToCart}></input>
       </li>
